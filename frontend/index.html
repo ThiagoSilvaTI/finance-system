@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Ana's Look - Financeiro</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<header>
+    <h1>Ana's Look</h1>
+    <p>Controle Financeiro da Loja</p>
+</header>
+
+<div class="container">
+
+    <!-- FORM -->
+    <div class="card">
+        <h2>Nova Transação</h2>
+        <form id="form">
+            <select id="type">
+                <option value="receita">💰 Venda</option>
+                <option value="despesa">💸 Gasto</option>
+            </select>
+
+            <input type="text" id="category" placeholder="Categoria (ex: Camisas)">
+            <input type="text" id="description" placeholder="Descrição">
+            <input type="number" id="amount" placeholder="Valor">
+            <input type="date" id="date">
+
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
+
+    <!-- LISTA -->
+    <div class="card">
+        <h2>Movimentações</h2>
+        <ul id="list"></ul>
+    </div>
+
+    <!-- GRÁFICO -->
+    <div class="card full">
+        <h2>Resumo Mensal</h2>
+        <canvas id="chart"></canvas>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
