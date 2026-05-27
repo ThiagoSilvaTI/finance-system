@@ -427,3 +427,9 @@ footer {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
+.logo-img{
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    border-radius: 12px;
+}
