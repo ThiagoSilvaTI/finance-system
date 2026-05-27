@@ -6,7 +6,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const db = new sqlite3.Database("./database.db");
+const path = require("path");
+
+const db = new sqlite3.Database(
+    path.join(__dirname, "database.db")
+);
 
 // Criar tabela
 db.run(`
@@ -57,4 +61,8 @@ app.get("/report", (req, res) => {
     });
 });
 
-app.listen(3000, () => console.log("Servidor rodando na porta 3000"));
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+});
