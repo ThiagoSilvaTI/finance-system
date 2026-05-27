@@ -69,7 +69,7 @@ app.get("/report", (req, res) => {
     });
 });
 
-const PORT = process.env.PORT || 3000;
+const API_URL = window.location.origin;
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
