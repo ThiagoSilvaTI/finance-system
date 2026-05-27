@@ -8,17 +8,17 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Banco
+const db = new sqlite3.Database(
+    path.join(__dirname, "database.db")
+);
+
 // Frontend
 app.use(express.static(path.join(__dirname, "frontend")));
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "frontend", "index.html"));
 });
-
-// Banco de dados
-const db = new sqlite3.Database(
-    path.join(__dirname, "database.db")
-);
 
 // Criar tabela
 db.run(`
@@ -40,8 +40,11 @@ app.post("/add", (req, res) => {
         "INSERT INTO transactions (type, category, description, amount, date) VALUES (?, ?, ?, ?, ?)",
         [type, category, description, amount, date],
         function (err) {
-            if (err) return res.send(err);
-            res.send({ id: this.lastID });
+            if (err) return res.status(500).send(err);
+
+            res.send({
+                id: this.lastID
+            });
         }
     );
 });
@@ -49,12 +52,13 @@ app.post("/add", (req, res) => {
 // Listar
 app.get("/list", (req, res) => {
     db.all("SELECT * FROM transactions", [], (err, rows) => {
-        if (err) return res.send(err);
+        if (err) return res.status(500).send(err);
+
         res.send(rows);
     });
 });
 
-// Relatório mensal
+// Relatório
 app.get("/report", (req, res) => {
     db.all(`
         SELECT 
@@ -64,12 +68,14 @@ app.get("/report", (req, res) => {
         FROM transactions
         GROUP BY month
     `, [], (err, rows) => {
-        if (err) return res.send(err);
+        if (err) return res.status(500).send(err);
+
         res.send(rows);
     });
 });
 
-const API_URL = window.location.origin;
+// Porta Render
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
