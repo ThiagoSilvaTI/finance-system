@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const cors = require("cors");
@@ -12,6 +13,13 @@ const db = new sqlite3.Database(
     path.join(__dirname, "database.db")
 );
 
+const path = require("path");
+
+app.use(express.static(path.join(__dirname, "frontend")));
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "frontend", "index.html"));
+});
 // Criar tabela
 db.run(`
 CREATE TABLE IF NOT EXISTS transactions (
